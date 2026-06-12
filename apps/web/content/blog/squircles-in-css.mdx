@@ -46,3 +46,39 @@ Because `border-radius` still controls the size, everything you already know abo
 | Firefox | Not yet supported |
 
 In other words, as of June 2026 `corner-shape` is a Chromium-only feature: it reaches roughly 65% of users globally and is not yet Baseline, with no public timeline from Safari or Firefox. Any production use today therefore needs a fallback so visitors on Safari and Firefox still see smooth corners.
+
+## iOS-style Corner Smoothing in CSS
+
+The squircle most people picture is Apple's — the shape of every iOS app icon. It is a superellipse with *continuous* corner smoothing, the same property Figma exposes as a "corner smoothing" slider. With `corner-shape: superellipse()`, CSS can finally target that exact look rather than approximating it.
+
+The mapping is direct: `corner-shape: squircle` is shorthand for `superellipse(2)`, and `superellipse(2)` is the curve that lands on the iOS aesthetic — the story of [how Apple adopted the squircle](/blog/squircles-in-apple-design) is the story of this exact shape. Values above 2 dial the smoothing up, flattening the sides and pushing the corner toward square; values between 1 and 2 dial it down toward an ordinary round corner. That is precisely what Figma's slider does — interpolate between a circular arc and a squarer superellipse — except now the dial lives in a stylesheet instead of a design tool.
+
+## The Fallback: Smooth Corners in Every Browser Today
+
+Until `corner-shape` ships everywhere your users are, you still need a way to render squircles that works in every browser. That is what `@squircle-js/react` does: it generates an SVG clip-path for the exact superellipse and applies it as a CSS `clip-path`, so the shape is identical across browsers regardless of `corner-shape` support.
+
+<SquircleDemo />
+
+```bash
+npm install @squircle-js/react
+```
+
+When `corner-shape` reaches full support, this same markup can be progressively enhanced — or replaced — with the native property. For the deeper background on why `border-radius` cannot do this and how the clip-path approach works, see [squircles in web design](/blog/squircles-in-web-design).
+
+## Frequently Asked Questions
+
+### Can you make a squircle with pure CSS?
+
+Yes — in Chromium 139+ you can pair `border-radius` with `corner-shape: squircle` and get a true squircle natively. As of June 2026 Safari and Firefox do not support it, so cross-browser squircles still need a fallback such as an SVG clip-path.
+
+### What is `superellipse()` in CSS?
+
+`superellipse()` is the function behind every `corner-shape` keyword: it takes a number that controls how square or round the corner curve is, where `superellipse(1)` is an ordinary round corner and `superellipse(2)` is the iOS-style squircle.
+
+### Does Firefox support `corner-shape`?
+
+No — as of June 2026, `corner-shape` is supported only in Chromium-based browsers (Chrome and Edge 139+), with no public timeline from Firefox or Safari.
+
+### Is `corner-shape` the same as `border-radius`?
+
+No. `border-radius` sets the *size* of the corner while `corner-shape` sets the *curve* drawn inside it — and `corner-shape` has no visible effect unless a non-zero `border-radius` is also set.
