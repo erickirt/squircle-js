@@ -33,7 +33,7 @@
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@testing-library/svelte": "^5.2.4",
     "jsdom": "^25.0.1",
-    "svelte": "^5.0.0",
+    "svelte": "^5.56.3",
     "svelte-check": "^4.0.0",
     "typescript": "catalog:",
     "vitest": "^2.1.0"

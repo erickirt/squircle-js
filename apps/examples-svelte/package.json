@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@squircle-js/svelte": "workspace:*",
-    "svelte": "^5.0.0"
+    "svelte": "^5.56.3"
   },
   "devDependencies": {
     "@squircle-js/tsconfig": "workspace:*",
