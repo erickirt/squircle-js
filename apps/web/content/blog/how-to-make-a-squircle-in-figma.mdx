@@ -1,0 +1,76 @@
+---
+title: "How to Make a Squircle in Figma"
+description: "Make a true squircle in Figma in four steps using the corner smoothing slider — including the exact 60% iOS setting, app icon proportions, SVG export, and how to match the shape on the web."
+date: "2026-06-12"
+keywords: ["how to make a squircle in figma", "figma squircle", "squircle figma", "figma corner smoothing", "squircle shape figma", "ios app icon figma"]
+slug: "how-to-make-a-squircle-in-figma"
+---
+
+Making a squircle in Figma takes about ten seconds once you know where to look: draw a rectangle, give it a corner radius, and turn up **corner smoothing** — a setting hidden behind a small icon next to the corner radius field. This guide walks through each step, gives you the exact values Apple uses for iOS icons, and shows how to carry the same shape from Figma to production code.
+
+## Step 1: Draw a Rectangle
+
+Press `R` and drag out a rectangle on the canvas (or press `F` for a frame — corner smoothing works on both). For your first squircle, a square around 200×200 makes the effect easiest to see.
+
+## Step 2: Set a Corner Radius
+
+With the shape selected, find the **corner radius** field in the right-hand design panel and give it a generous value — say 40 on a 200×200 square. At this point you have a standard rounded rectangle: straight sides meeting circular arcs at each corner. Corner smoothing has no visible effect until a corner radius is set, so this step is not optional.
+
+## Step 3: Turn Up Corner Smoothing
+
+Open the corner options next to the corner radius field and you will find the **corner smoothing** slider, ranging from 0% to 100%. Drag it and watch the corners change character: the curve starts earlier, extends further along the sides, and the "bolted-on" quality of the circular arcs disappears. This is squircle geometry — the same continuously curved corners described in [what is a squircle](/blog/what-is-a-squircle).
+
+At 0% the shape is an ordinary rounded rectangle. At 100% the smoothing is pushed to its maximum, which can make flat sides appear to bow slightly. Most designs look best between 40% and 70%.
+
+## Step 4: Use 60% for the iOS Look
+
+Figma marks one value on the smoothing slider specially: **60%**, labeled "iOS". That is the corner smoothing Apple uses for app icons, and it is the value to choose when you want the familiar, polished Apple feel. It is also the default (`cornerSmoothing: 0.6`) in squircle-js, so designs built at 60% translate to the web without adjustment.
+
+## Making an iOS App Icon Squircle
+
+To reproduce the actual iOS app icon shape, two values matter:
+
+- **Corner radius ≈ 22.37% of the icon's width** — for a 1024×1024 icon, that is a radius of about 229; for a 512 icon, about 114
+- **Corner smoothing = 60%**
+
+Set both on a square and you have the same mask iOS applies to every app icon. The background on [why Apple chose these values](/blog/squircles-in-apple-design) is a story of its own.
+
+## Exporting Your Squircle
+
+Squircle geometry survives export cleanly:
+
+- **SVG** — the smoothed corners are baked into the path data, so the SVG renders identically anywhere. This is also a handy way to extract a squircle clip-path for one-off use.
+- **PNG** — works for fixed-size assets like icons, at the cost of resolution independence.
+
+The limitation appears when the shape needs to *resize* — a button, a card, a responsive container. An exported path is frozen at one size and aspect ratio, and squircle corners do not scale the way `border-radius` does. That is a handoff problem, not a Figma problem, and it is solvable.
+
+## From Figma to the Web
+
+CSS `border-radius` cannot reproduce corner smoothing — it only draws circular arcs, so a developer implementing your design with CSS alone will get a visibly different shape. You have two faithful options:
+
+1. **squircle-js** — uses the same open-source algorithm (`figma-squircle`) that matches Figma's corner smoothing math, and regenerates the path on resize. A Figma shape with radius 24 and smoothing 60% becomes `<Squircle cornerRadius={24} cornerSmoothing={0.6}>` and renders pixel-identically. The full workflow is covered in [Figma corner smoothing on the web](/blog/figma-corner-smoothing-on-the-web).
+2. **CSS `corner-shape`** — the upcoming native property, currently Chromium-only. See [where browser support stands](/blog/squircles-in-css).
+
+```bash
+npm install @squircle-js/react
+```
+
+<SquircleDemo />
+
+## Frequently Asked Questions
+
+### Where is corner smoothing in Figma?
+
+In the design panel on the right, next to the corner radius field. Open the corner options for the selected shape and the corner smoothing slider (0–100%) appears. It only has an effect when the shape has a non-zero corner radius.
+
+### What corner smoothing does iOS use?
+
+60%. Figma marks this value on the slider with an "iOS" label, and it corresponds to `cornerSmoothing: 0.6` in squircle-js.
+
+### Does corner smoothing work on frames and components?
+
+Yes — rectangles, frames, and components all support corner smoothing, so you can apply it directly to auto-layout buttons and cards rather than masking them with a separate shape.
+
+### Can I copy a squircle from Figma as CSS?
+
+Not faithfully. Figma's CSS inspection gives you `border-radius`, which drops the smoothing entirely. To keep the true shape, export as SVG for fixed-size assets, or use [squircle-js](/docs/getting-started) for live, resizable elements.

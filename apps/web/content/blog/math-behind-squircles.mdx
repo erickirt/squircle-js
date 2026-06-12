@@ -1,12 +1,30 @@
 ---
-title: "The Math Behind Squircles: Superellipses Explained"
-description: "Learn the mathematical foundation of squircles, from Piet Hein's superellipse to Lame curves, and how the formula creates smooth corners."
+title: "The Squircle Formula: Superellipse Math Explained"
+description: "The squircle equation is x⁴ + y⁴ = r⁴ — a special case of the superellipse formula |x/a|ⁿ + |y/b|ⁿ = 1. Learn where the formula comes from, how the exponent shapes the curve, and how it translates to corner smoothing in UI design."
 date: "2026-03-14"
-keywords: ["superellipse", "squircle formula", "squircle math", "lame curve", "piet hein superellipse"]
+keywords: ["squircle formula", "squircle equation", "superellipse formula", "superellipse", "squircle math", "lame curve", "apple squircle formula", "piet hein superellipse"]
 slug: "math-behind-squircles"
 ---
 
 A squircle is not just an aesthetic choice — it is a mathematically precise shape with a formula and a history. Understanding the math reveals why squircles look the way they do, why they feel more natural than rounded rectangles, and how corner smoothing parameters translate into actual geometry.
+
+## The Squircle Formula
+
+The equation for a squircle is:
+
+```
+x^4 + y^4 = r^4
+```
+
+where `r` is the "radius" — half the width of the shape. It is the quartic analogue of the circle equation `x^2 + y^2 = r^2`: raising the exponent from 2 to 4 flattens the sides and squares up the form while keeping the curve perfectly smooth.
+
+The squircle is a special case of the more general **superellipse formula**:
+
+```
+|x/a|^n + |y/b|^n = 1
+```
+
+with equal semi-axes (`a = b`) and exponent `n = 4`. Everything else in this post — the history, the geometry, and the corner-smoothing parameter used in UI design — follows from this one equation.
 
 ## Gabriel Lamé and the Generalized Ellipse
 
@@ -80,3 +98,21 @@ Understanding the math has practical consequences for how you use squircles:
 **Aspect ratio effects:** Squircle geometry on non-square shapes (tall or wide rectangles) produces different visual effects depending on aspect ratio. The corners of a wide rectangle with large radius will look more circular than the corners of a square with the same radius. This is mathematically correct behavior, not a bug.
 
 The math behind squircles is elegant precisely because it produces complex visual behavior from a simple formula. The superellipse is one of those rare cases where mathematical beauty and visual beauty align.
+
+## Frequently Asked Questions
+
+### What is the formula for a squircle?
+
+`x^4 + y^4 = r^4`, where `r` is half the width of the shape. It is the superellipse formula `|x/a|^n + |y/b|^n = 1` with equal axes and exponent `n = 4`.
+
+### What is the difference between the squircle equation and the circle equation?
+
+Only the exponent. A circle is `x^2 + y^2 = r^2`; a squircle raises both exponents to 4. The higher exponent makes the sides flatter and the corners tighter while keeping curvature continuous everywhere.
+
+### What squircle formula does Apple use for iOS icons?
+
+Apple's exact icon outline is not a pure superellipse — it is built from carefully tuned Bézier curves that closely approximate one. In practice, [a corner radius of about 22.37% of the icon width with 60% corner smoothing](/blog/squircles-in-apple-design) reproduces the iOS icon shape, which is exactly what `cornerSmoothing: 0.6` renders in squircle-js.
+
+### Is a squircle the same as a superellipse?
+
+A squircle is one member of the superellipse family: the symmetric case with `a = b` and `n = 4`. Superellipses with other exponents or unequal axes — like Piet Hein's `n = 2.5` roundabout — are not squircles in the strict sense, though designers often use the terms loosely.

@@ -1,0 +1,87 @@
+---
+title: "What Is a Rectangle with Rounded Corners Called?"
+description: "A rectangle with rounded corners is called a rounded rectangle. But depending on how the corners curve, it might be a stadium, a pill, a squircle, or a superellipse. Here is what each shape is named and how to tell them apart."
+date: "2026-06-12"
+keywords: ["rectangle with rounded corners called", "rounded rectangle name", "what is a square with rounded corners called", "stadium shape", "pill shape", "rounded square", "squircle"]
+slug: "what-is-a-rounded-rectangle-called"
+---
+
+A rectangle with rounded corners is called a **rounded rectangle**. That is the standard name in geometry, in design tools, and in programming — Figma calls it a rounded rectangle, CSS creates one with `border-radius`, and classic graphics APIs literally named the drawing function `RoundRect`.
+
+But "rounded rectangle" is only the start of the answer. Depending on *how* the corners are rounded, the shape may have a more specific name — and a few of those names describe shapes that look similar but are mathematically different.
+
+## Every Name for a Rectangle with Rounded Corners
+
+| Shape | What it looks like | Where the name is used |
+|---|---|---|
+| **Rounded rectangle** | Straight sides, circular arcs at the corners | Geometry, design tools, CSS |
+| **Rounded square** | A square with circular corner arcs | Design, everyday usage |
+| **Stadium** (also *pill*, *capsule*, *discorectangle*) | A rectangle whose short ends are full semicircles | Geometry (stadium), UI design (pill button, capsule) |
+| **Obround** | Same as a stadium | Engineering and machining |
+| **Squircle** | Corners that curve continuously into the sides, with no abrupt transition | Modern UI design, iOS app icons |
+| **Superellipse** (Lamé curve) | The mathematical family that produces squircle-like shapes | Mathematics |
+| **Chamfered rectangle** | Corners cut off with straight diagonal lines (beveled, not rounded) | Drafting, engineering |
+
+If you just need the everyday word, "rounded rectangle" is always correct. The rest of this post explains when each of the more specific names applies.
+
+## Rounded Rectangle: The Standard Name
+
+A rounded rectangle is constructed from four straight sides and four circular arcs — one arc replacing each corner. The shape has been a staple of user interfaces since the original Macintosh: Bill Atkinson added a dedicated `RoundRect` primitive to QuickDraw in 1981 after Steve Jobs walked him around the block pointing out how many real-world objects — street signs, tabletops, windows — have rounded corners. The name stuck, and "roundrect" remains common shorthand among programmers.
+
+On the web, the rounded rectangle is what CSS `border-radius` produces: each corner is a circular (or elliptical) arc, and the sides stay perfectly straight until the arc begins.
+
+## When the Ends Are Fully Round: Stadium, Pill, or Capsule
+
+Push the corner radius to half the rectangle's height and the two short ends become complete semicircles. Geometers call this shape a **stadium** (occasionally a *discorectangle*); engineers call it an **obround**; UI designers almost universally call it a **pill** or **capsule** — as in pill buttons, pill badges, and capsule tags.
+
+So if you are looking at a rectangle with fully curved, semicircular ends, the most precise answer to "what is this called" is a stadium — but in a design context, "pill shape" is the term everyone will recognize.
+
+## When the Corners Flow Smoothly: Squircle
+
+There is a subtler variation that has become the signature of modern interface design. In a standard rounded rectangle, the straight side meets the circular arc at a single point, and the curvature jumps abruptly from zero to its maximum at that join. In a **squircle**, there is no join at all: the curvature builds gradually as the side approaches the corner, peaks, and eases off again. The entire outline is one continuous curve.
+
+<SquircleComparison />
+
+This is the shape of every iOS app icon, and it is the shape Figma produces when you enable corner smoothing. Side by side with a rounded rectangle, the squircle looks softer and more organic — a difference explained in depth in [what is a squircle](/blog/what-is-a-squircle) and [squircle vs rounded rectangle](/blog/squircle-vs-rounded-rectangle).
+
+The mathematical family behind the squircle is the **superellipse**, described by Lamé curves of the form `|x/a|^n + |y/b|^n = 1`. If you want the formula and its history — from Gabriel Lamé to Piet Hein's Stockholm roundabout — see [the math behind squircles](/blog/math-behind-squircles).
+
+## What About a Square with Rounded Corners?
+
+A square with rounded corners is called a **rounded square** — the same construction as a rounded rectangle, just with equal sides. When its corners curve continuously rather than as circular arcs, it is a squircle in the strictest sense: the original mathematical squircle is exactly a superellipse with equal axes, sitting halfway between a square and a circle.
+
+In practice, designers use "squircle" loosely for both squares and rectangles with smooth corners, and the distinction rarely matters outside mathematics.
+
+## Names That Sound Right but Aren't
+
+A few terms get applied to rounded rectangles incorrectly:
+
+- **Lozenge** — properly a rhombus (a diamond shape), though some UI frameworks misuse it for pill shapes
+- **Chamfered rectangle** — corners cut with straight diagonal bevels, not curves; the angular cousin of the rounded rectangle
+- **Oval / ellipse** — has no straight sides at all; a stadium is sometimes mistaken for one
+
+## Frequently Asked Questions
+
+### What do you call a rectangle with rounded corners?
+
+A rounded rectangle. If the short ends are fully semicircular, it is a stadium (called a pill or capsule in UI design). If the corners curve continuously into the sides instead of being circular arcs, it is a squircle.
+
+### What do you call a square with rounded corners?
+
+A rounded square. When the corners blend smoothly into the sides with continuous curvature — like an iOS app icon — it is a squircle.
+
+### Is a square with rounded corners still a square?
+
+Not in the strict geometric sense — a square has four right-angle corners, and rounding them produces a different shape with curved segments. In everyday and design usage, though, "rounded square" is universally understood.
+
+### What is a rectangle with semicircular ends called?
+
+A stadium in geometry, an obround in engineering, and a pill or capsule in design. All three names describe the same shape: a rectangle capped by two half-circles.
+
+### What is the difference between a rounded rectangle and a squircle?
+
+A rounded rectangle joins straight sides to circular arcs, creating an abrupt curvature change at each join. A squircle's curvature changes continuously around the whole perimeter, which makes it look smoother and more natural. The full comparison is in [squircle vs rounded rectangle](/blog/squircle-vs-rounded-rectangle).
+
+### How do I make these shapes on the web?
+
+CSS `border-radius` produces rounded rectangles, and pushing the radius to 9999px produces pills. True squircles are harder — `border-radius` cannot express them, which is why libraries like [squircle-js](/) generate the shape as an SVG clip-path, and why CSS is adding a native `corner-shape` property ([browser support here](/blog/squircles-in-css)).
