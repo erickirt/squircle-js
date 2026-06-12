@@ -11,3 +11,26 @@ For years, the honest answer to "can you make a squircle in pure CSS?" was no. `
 This guide covers what `corner-shape` is, how to draw a squircle with it, where browser support stands in 2026, and how to ship smooth corners in every browser today while support catches up.
 
 <SquircleComparison />
+
+## What `corner-shape` Is
+
+`corner-shape` is a new CSS property that controls the *geometry* of a corner, while `border-radius` continues to control its *size*. Where `border-radius` alone always draws a circular or elliptical arc, `corner-shape` lets you tell the browser to draw a different curve in that same corner box.
+
+The property accepts a set of named values, each of which is shorthand for a `superellipse()` function: `round` is the default and equals `superellipse(1)` — the circular corner you get today; `squircle` equals `superellipse(2)` — the iOS look; `bevel` equals `superellipse(0)` — a straight diagonal cut; `scoop` equals `superellipse(-1)` — a concave corner; `notch` equals `superellipse(-infinity)`; and `square` equals `superellipse(infinity)` — a sharp corner. You can also pass `superellipse(<number>)` directly to tune the curve to any point between these presets. Like `border-radius`, the shorthand accepts one to four values to target corners individually, and per-corner longhands such as `corner-top-left-shape` exist as well.
+
+The crucial detail is that `corner-shape` has no visible effect without a non-zero `border-radius`. The radius defines the corner box; the shape defines the curve drawn inside it. Set `corner-shape: squircle` on an element with `border-radius: 0` and nothing happens — the two properties only produce smooth corners together. `superellipse(K)` draws the curve `x^(2K) + y^(2K) = 1` within that corner box: `K=1` is an ordinary round corner, `K=2` is the squircle that matches the iOS aesthetic, and higher values grow progressively squarer.
+
+## Making a Squircle with `corner-shape`
+
+To draw a squircle, pair a `border-radius` (which sets the corner size) with `corner-shape` set to a superellipse (which sets the corner curve):
+
+```css
+.squircle {
+  border-radius: 24px;
+  corner-shape: squircle; /* equivalent to superellipse(2) — the iOS look */
+}
+```
+
+The `corner-shape` keyword `squircle` is shorthand for `superellipse(2)`. You can pass other values to `superellipse()` to tune the curve: `superellipse(1)` is an ordinary round corner, larger numbers flatten the sides and tighten the curve toward a sharp corner, and negative numbers curve inward (`scoop`, `notch`). Without a non-zero `border-radius`, `corner-shape` has no visible effect.
+
+Because `border-radius` still controls the size, everything you already know about radii carries over: percentage values, per-corner values, and elliptical radii all combine with `corner-shape` as you would expect. A generous radius paired with `corner-shape: squircle` is what produces the smooth, continuous corner that `border-radius` alone has never been able to draw.
