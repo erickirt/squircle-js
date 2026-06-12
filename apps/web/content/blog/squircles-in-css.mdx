@@ -31,7 +31,7 @@ To draw a squircle, pair a `border-radius` (which sets the corner size) with `co
 }
 ```
 
-The `corner-shape` keyword `squircle` is shorthand for `superellipse(2)`. You can pass other values to `superellipse()` to tune the curve: `superellipse(1)` is an ordinary round corner, larger numbers flatten the sides and tighten the curve toward a sharp corner, and negative numbers curve inward (`scoop`, `notch`). Without a non-zero `border-radius`, `corner-shape` has no visible effect.
+The `corner-shape` keyword `squircle` is shorthand for `superellipse(2)`. You can pass other values to `superellipse()` to tune the curve: `superellipse(1)` is an ordinary round corner, larger numbers flatten the sides and tighten the curve toward a sharp corner, and negative numbers curve inward (`scoop`, `notch`).
 
 Because `border-radius` still controls the size, everything you already know about radii carries over: percentage values, per-corner values, and elliptical radii all combine with `corner-shape` as you would expect. A generous radius paired with `corner-shape: squircle` is what produces the smooth, continuous corner that `border-radius` alone has never been able to draw.
 
